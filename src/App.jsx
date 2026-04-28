@@ -1,4 +1,6 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Moon, Sun } from 'lucide-react';
 import Differentiator from './components/Differentiator';
 import FeatureCard from './components/FeatureCard';
 import Footer from './components/Footer';
@@ -20,16 +22,33 @@ function DashboardIllustration() {
     >
       <div className="dashboard-slab">
         <div className="bars">
-          {[44, 72, 54, 86, 62, 95].map((height) => (
-            <span key={height} style={{ height: `${height}%` }} />
+          {[44, 72, 54, 86, 62, 95].map((height, index) => (
+            <motion.span
+              key={height}
+              style={{ height: `${height}%` }}
+              initial={{ scaleY: 0.25, opacity: 0.45 }}
+              whileInView={{ scaleY: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.75, delay: index * 0.08, ease: 'easeOut' }}
+            />
           ))}
         </div>
-        <div className="line-chart" />
-        <div className="donut" />
+        <motion.div
+          className="line-chart"
+          initial={{ clipPath: 'inset(0 100% 0 0)' }}
+          whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.05, delay: 0.22, ease: 'easeOut' }}
+        />
+        <motion.div className="donut" whileHover={{ scale: 1.08 }} />
         <div className="data-stack">
-          <span />
-          <span />
-          <span />
+          {[0, 1, 2].map((item) => (
+            <motion.span
+              key={item}
+              animate={{ x: [0, item % 2 ? -8 : 8, 0] }}
+              transition={{ duration: 3.4, repeat: Infinity, delay: item * 0.22, ease: 'easeInOut' }}
+            />
+          ))}
         </div>
       </div>
       <div className="floating-panel panel-one" />
@@ -51,7 +70,7 @@ function ExecutiveSummary() {
         >
           <div className="mb-5 flex items-center gap-4">
             <span className="h-4 w-4 rounded-full bg-blue shadow-[0_0_18px_rgba(37,99,235,.85)]" />
-            <h2 className="text-2xl font-semibold text-slate-100">Resumo executivo</h2>
+            <h2 className="text-2xl font-semibold text-slate-100">Resumo profissional</h2>
           </div>
           <p className="max-w-xl text-base leading-8 text-slate-300">{profile.professional.executive}</p>
         </motion.div>
@@ -61,14 +80,46 @@ function ExecutiveSummary() {
   );
 }
 
-function App() {
+function ThemeToggle({ theme, onToggle }) {
+  const isLight = theme === 'light';
+  const Icon = isLight ? Moon : Sun;
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-ink text-slate-50">
+    <button
+      type="button"
+      className="theme-toggle"
+      aria-label={isLight ? 'Ativar tema escuro' : 'Ativar tema claro'}
+      aria-pressed={isLight}
+      onClick={onToggle}
+    >
+      <Icon size={20} strokeWidth={2.1} />
+    </button>
+  );
+}
+
+function App() {
+  const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') || 'dark');
+  const projectTrackRef = useRef(null);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('portfolio-theme', theme);
+  }, [theme]);
+
+  const scrollProjects = (direction) => {
+    projectTrackRef.current?.scrollBy({
+      left: direction * 360,
+      behavior: 'smooth',
+    });
+  };
+
+  return (
+    <div className={`app-root min-h-screen overflow-x-hidden bg-ink text-slate-50 ${theme === 'light' ? 'light-theme' : 'dark-theme'}`}>
       <div className="site-bg" />
+      <ThemeToggle theme={theme} onToggle={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))} />
       <Navbar />
       <main className="pt-[72px]">
         <Hero profile={profile.professional} flow={profile.flow} />
-        <Footer links={profile.socialLinks} />
         <ExecutiveSummary />
 
         <section className="layout-shell py-14">
@@ -82,7 +133,7 @@ function App() {
 
         <section id="experiencia" className="layout-shell py-14">
           <SectionHeader eyebrow="Experiência aplicada" title="Onde gera valor" />
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {profile.valueAreas.map((item, index) => (
               <ValueCard key={item.title} item={item} index={index} />
             ))}
@@ -90,15 +141,24 @@ function App() {
         </section>
 
         <section id="projetos" className="layout-shell py-14">
-          <SectionHeader eyebrow="Projetos e entregas" title="Soluções que geram resultado" />
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {profile.projects.map((item, index) => (
-              <ProjectCard key={item.title} item={item} index={index} />
-            ))}
+          <SectionHeader eyebrow="Projetos e entregas" title="Soluções construídas" />
+          <div className="project-carousel">
+            <button type="button" className="project-nav project-nav-left" aria-label="Ver projetos anteriores" onClick={() => scrollProjects(-1)}>
+              <ChevronLeft size={22} />
+            </button>
+            <div ref={projectTrackRef} className="project-scroll flex gap-5 overflow-x-auto px-4 py-7">
+              {profile.projects.map((item, index) => (
+                <ProjectCard key={item.title} item={item} index={index} />
+              ))}
+            </div>
+            <button type="button" className="project-nav project-nav-right" aria-label="Ver mais projetos" onClick={() => scrollProjects(1)}>
+              <ChevronRight size={22} />
+            </button>
           </div>
         </section>
 
         <Differentiator items={profile.differentiators} />
+        <Footer links={profile.socialLinks} />
       </main>
     </div>
   );

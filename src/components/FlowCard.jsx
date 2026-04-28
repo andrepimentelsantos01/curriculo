@@ -12,12 +12,17 @@ export default function FlowCard({ item, index }) {
 
   return (
     <motion.div
-      className={`relative grid min-h-32 w-32 place-items-center rounded-2xl border bg-slate-950/45 p-4 backdrop-blur ${toneClass[item.tone]}`}
-      animate={{ y: [0, -10, 0] }}
+      className={`kinetic-card relative grid min-h-32 w-32 place-items-center rounded-2xl border bg-slate-950/45 p-4 backdrop-blur ${toneClass[item.tone]}`}
+      animate={{ y: [0, -10, 0], rotate: [0, index % 2 ? -1.2 : 1.2, 0] }}
       transition={{ duration: 3.6, repeat: Infinity, delay: index * 0.25, ease: 'easeInOut' }}
-      whileHover={{ scale: 1.06, y: -8 }}
+      whileHover={{ scale: 1.08, y: -10 }}
     >
-      <Icon size={44} strokeWidth={1.65} />
+      <motion.div
+        animate={{ scale: [1, 1.08, 1] }}
+        transition={{ duration: 2.6, repeat: Infinity, delay: index * 0.2, ease: 'easeInOut' }}
+      >
+        <Icon size={44} strokeWidth={1.65} />
+      </motion.div>
       <p className="mt-3 text-base font-semibold text-slate-100">{item.title}</p>
     </motion.div>
   );

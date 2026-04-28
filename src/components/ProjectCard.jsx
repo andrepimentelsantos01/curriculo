@@ -1,83 +1,79 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-
-function MiniMockup({ type }) {
-  if (type === 'pipeline') {
-    return (
-      <div className="mockup-panel grid grid-cols-3 items-center gap-3">
-        {[0, 1, 2].map((item) => (
-          <div key={item} className="h-10 rounded-lg border border-sky-300/20 bg-slate-950/60" />
-        ))}
-        <div className="col-span-3 h-px bg-gradient-to-r from-blue via-cyan to-lime" />
-        {[0, 1, 2].map((item) => (
-          <div key={`b-${item}`} className="h-8 rounded-lg border border-lime/20 bg-lime/10" />
-        ))}
-      </div>
-    );
-  }
-
-  if (type === 'dashboard') {
-    return (
-      <div className="mockup-panel grid grid-cols-5 gap-2">
-        <div className="col-span-3 rounded-lg bg-slate-950/70 p-2">
-          <div className="h-20 rounded bg-[radial-gradient(circle_at_45%_45%,rgba(34,211,238,.45),transparent_30%)]" />
-        </div>
-        <div className="col-span-2 space-y-2">
-          <div className="h-9 rounded bg-cyan/20" />
-          <div className="h-9 rounded bg-lime/20" />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="mockup-panel">
-      <div className="mb-3 flex gap-2">
-        <span className="h-2 w-2 rounded-full bg-blue" />
-        <span className="h-2 w-2 rounded-full bg-cyan" />
-        <span className="h-2 w-2 rounded-full bg-lime" />
-      </div>
-      <div className="rounded-lg border border-sky-300/15 bg-slate-950/70 p-4">
-        {type === 'api' ? (
-          <>
-            <div className="mb-2 h-4 w-4/5 rounded bg-cyan/20" />
-            <div className="h-16 rounded border border-blue/20 bg-blue/10" />
-          </>
-        ) : (
-          <div className="flex h-24 items-end gap-2">
-            {[34, 52, 40, 68, 48, 78, 62, 88].map((height) => (
-              <span key={height} className="flex-1 rounded-t bg-gradient-to-t from-blue to-cyan" style={{ height: `${height}%` }} />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+import { ArrowRight } from 'lucide-react';
 
 export default function ProjectCard({ item, index }) {
+  const [flipped, setFlipped] = useState(false);
+
   return (
     <motion.article
-      className="flex h-full flex-col rounded-2xl border border-sky-300/18 bg-slate-900/60 p-5 backdrop-blur-xl transition hover:border-cyan/45"
+      className="project-flip h-full shrink-0"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.45, delay: index * 0.08 }}
-      whileHover={{ y: -8 }}
+      whileHover={{ y: -10, scale: 1.01 }}
     >
-      <span className="w-fit rounded-lg border border-cyan/20 bg-cyan/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-cyan">
-        {item.badge}
-      </span>
-      <h3 className="mt-5 text-xl font-semibold leading-tight text-slate-100">{item.title}</h3>
-      <p className="mt-3 text-sm leading-6 text-slate-300">{item.description}</p>
-      <p className="mt-5 text-xs text-slate-400">Tecnologias</p>
-      <div className="mt-2 flex flex-wrap gap-2">
-        {item.technologies.map((tech) => (
-          <span key={tech} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">
-            {tech}
+      <button
+        type="button"
+        aria-pressed={flipped}
+        aria-label={`${item.title}: ${flipped ? 'mostrar resumo' : 'mostrar detalhes'}`}
+        className={`project-flip-button kinetic-card relative min-h-[270px] w-[300px] overflow-hidden rounded-2xl border border-sky-300/18 bg-slate-900/60 p-5 text-left backdrop-blur-xl transition hover:border-cyan/45 sm:w-[315px] xl:w-[330px] ${flipped ? 'is-flipped' : ''}`}
+        onClick={() => setFlipped((current) => !current)}
+      >
+        <span className="project-flip-inner">
+          <span className="project-face project-face-front p-5">
+            <span className="w-fit rounded-lg border border-cyan/20 bg-cyan/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-cyan">
+              {item.badge}
+            </span>
+            <span className="project-card-copy">
+              <span className="mt-5 block text-xl font-semibold leading-tight text-slate-100">{item.title}</span>
+              <span className="mt-3 block text-sm leading-6 text-slate-300">{item.description}</span>
+              <span className="mt-5 block text-xs text-slate-400">Tecnologias</span>
+              <span className="mt-2 flex flex-wrap gap-2">
+                {item.technologies.map((tech) => (
+                  <span key={tech} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">
+                    {tech}
+                  </span>
+                ))}
+              </span>
+            </span>
           </span>
-        ))}
-      </div>
-      <MiniMockup type={item.mockup} />
+
+          <span className="project-face project-face-back p-5">
+            <span className="text-xs font-bold uppercase tracking-[0.18em] text-cyan">Detalhes do projeto</span>
+            <span className="mt-3 block text-xl font-semibold leading-tight text-slate-100">{item.title}</span>
+            <span className="mt-4 space-y-3 text-sm leading-6 text-slate-300">
+              {item.details.map((detail) => (
+                <span key={detail} className="block">
+                  {detail}
+                </span>
+              ))}
+            </span>
+            <span className="mt-4 block text-sm font-semibold text-slate-100">Principais entregas</span>
+            <span className="mt-2 grid gap-2 text-sm leading-5 text-slate-300">
+              {item.deliverables.map((deliverable) => (
+                <span key={deliverable} className="flex gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan" />
+                  {deliverable}
+                </span>
+              ))}
+            </span>
+            <span className="mt-4 block text-sm font-semibold text-slate-100">Impacto</span>
+            <span className="mt-1 block text-sm leading-6 text-slate-300">{item.impact}</span>
+            <span className="mt-4 flex flex-wrap gap-2">
+              {item.tags.map((tag) => (
+                <span key={tag} className="rounded-full border border-cyan/20 bg-cyan/10 px-3 py-1 text-xs font-semibold text-slate-200">
+                  {tag}
+                </span>
+              ))}
+            </span>
+            <span className="mt-auto grid h-10 w-10 place-items-center rounded-full border border-cyan/40 bg-slate-950/45 text-cyan shadow-glow">
+              <ArrowRight size={18} className="rotate-180" />
+            </span>
+          </span>
+        </span>
+      </button>
     </motion.article>
   );
 }

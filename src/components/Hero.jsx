@@ -12,13 +12,20 @@ export default function Hero({ profile, flow }) {
           transition={{ duration: 0.7 }}
           className="relative z-10"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-cyan/20 bg-cyan/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-cyan">
-            <span className="h-2 w-2 rounded-full bg-cyan shadow-[0_0_18px_rgba(34,211,238,.9)]" />
+          <motion.span
+            className="inline-flex items-center gap-2 rounded-full border border-cyan/20 bg-cyan/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-cyan"
+            whileHover={{ scale: 1.04 }}
+          >
+            <motion.span
+              className="h-2 w-2 rounded-full bg-cyan shadow-[0_0_18px_rgba(34,211,238,.9)]"
+              animate={{ scale: [1, 1.45, 1], opacity: [0.75, 1, 0.75] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+            />
             {profile.role}
-          </span>
+          </motion.span>
           <h1 className="mt-6 text-6xl font-bold leading-[0.95] text-slate-50 md:text-7xl">
             {profile.firstName}
-            <span className="block bg-gradient-to-r from-blue via-cyan to-lime bg-clip-text text-transparent">
+            <span className="gradient-text-flow block bg-gradient-to-r from-blue via-cyan to-lime bg-clip-text text-transparent">
               {profile.lastName}
             </span>
           </h1>
@@ -53,13 +60,14 @@ export default function Hero({ profile, flow }) {
           transition={{ duration: 0.8, delay: 0.15 }}
         >
           <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_70%_22%,rgba(34,211,238,.2),transparent_28%),radial-gradient(circle_at_84%_58%,rgba(132,204,22,.18),transparent_24%)]" />
+          <div className="hero-orbit hidden lg:block" />
           <div className="absolute left-0 top-28 hidden h-px w-full bg-gradient-to-r from-transparent via-cyan to-transparent lg:block" />
           <div className="relative z-10 flex flex-wrap items-center justify-center gap-9 pt-8 lg:flex-nowrap lg:justify-end">
             {flow.map((item, index) => (
               <div key={item.title} className="relative">
                 <FlowCard item={item} index={index} />
                 {index < flow.length - 1 && (
-                  <span className="absolute -right-8 top-1/2 hidden h-px w-7 bg-gradient-to-r from-cyan to-lime lg:block">
+                  <span className="flow-connector absolute -right-8 top-1/2 hidden h-px w-7 bg-gradient-to-r from-cyan to-lime lg:block">
                     <span className="absolute -right-1 -top-1 h-2 w-2 rotate-45 border-r border-t border-lime" />
                   </span>
                 )}
@@ -80,11 +88,15 @@ export default function Hero({ profile, flow }) {
               />
             ))}
           </svg>
-          <div className="absolute bottom-16 right-8 rounded-2xl border border-lime/20 bg-slate-950/45 p-4 text-sm text-slate-300 backdrop-blur-xl">
-            <span className="font-semibold text-lime">Decisões melhores</span>
+          <motion.div
+            className="absolute bottom-16 right-8 rounded-2xl border border-lime/20 bg-slate-950/45 p-4 text-sm text-slate-300 backdrop-blur-xl"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <span className="font-semibold text-lime">Decisões mais consistentes</span>
             <br />
             com dados confiáveis
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
