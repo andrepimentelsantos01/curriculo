@@ -1,0 +1,135 @@
+export const profile = {
+  professional: {
+    firstName: 'André Pimentel',
+    lastName: 'Santos',
+    email: 'andrepimentelsantos01@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/andrepimentelsantos01/',
+    role: 'Profissional de Dados & BI',
+    summary:
+      'Profissional de Dados & BI que transforma estrutura técnica em inteligência operacional.',
+    stack: ['Infraestrutura Analítica', 'SQL', 'Python', 'FastAPI', 'React'],
+    quote:
+      'Análise boa não nasce no gráfico. Nasce na estrutura que sustenta o dado.',
+    executive:
+      'Profissional de Dados e BI com experiência em análise, estruturação da informação e desenvolvimento de soluções analíticas para contextos operacionais. Atua na conexão entre banco de dados, regras de acesso, APIs em Python e interfaces analíticas, com foco em confiabilidade, clareza e utilidade do dado para a decisão.',
+  },
+  socialLinks: [
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/andrepimentelsantos01/', icon: 'Linkedin' },
+    { label: 'E-mail', href: 'mailto:andrepimentelsantos01@gmail.com', icon: 'Mail' },
+    { label: 'GitHub', href: 'https://github.com/andrepimentelsantos01/', icon: 'Github' },
+    { label: 'Portfólio', href: 'https://github.com/andrepimentelsantos01/', icon: 'Globe2' },
+  ],
+  technologies: ['Python', 'SQL', 'FastAPI', 'React', 'PostgreSQL', 'Power BI', 'Docker'],
+  flow: [
+    { title: 'Dados', icon: 'Database', tone: 'blue' },
+    { title: 'APIs', icon: 'Code2', tone: 'cyan' },
+    { title: 'Interfaces', icon: 'BarChart3', tone: 'cyan' },
+    { title: 'Decisão', icon: 'Target', tone: 'lime' },
+  ],
+  actingCards: [
+    {
+      title: 'Dados',
+      icon: 'Database',
+      description: 'Modelagem, consultas, métricas e sustentação analítica.',
+      tone: 'blue',
+    },
+    {
+      title: 'Serviço',
+      icon: 'Settings2',
+      description: 'APIs em Python/FastAPI para organizar acesso e entrega.',
+      tone: 'cyan',
+    },
+    {
+      title: 'Interface',
+      icon: 'MonitorCog',
+      description: 'Dashboards e interfaces analíticas em React.',
+      tone: 'cyan',
+    },
+    {
+      title: 'Operação',
+      icon: 'ShieldCheck',
+      description: 'Clareza, rastreabilidade e utilidade para decisão.',
+      tone: 'lime',
+    },
+  ],
+  valueAreas: [
+    {
+      title: 'Saúde',
+      icon: 'HeartPulse',
+      context: 'Gestão assistencial',
+      delivery: 'Dashboards e apoio operacional',
+      impact: 'Decisões mais rápidas e seguras',
+      tags: ['Confiabilidade', 'Retrabalho'],
+      tone: 'blue',
+    },
+    {
+      title: 'Logística',
+      icon: 'Truck',
+      context: 'Operações e transporte',
+      delivery: 'Visibilidade ponta a ponta',
+      impact: 'Eficiência e redução de custos',
+      tags: ['28% Eficiência', '18% Custos'],
+      tone: 'cyan',
+    },
+    {
+      title: 'Estoques',
+      icon: 'PackageCheck',
+      context: 'Controle e abastecimento',
+      delivery: 'Pipeline e consolidação de dados',
+      impact: 'Precisão e disponibilidade',
+      tags: ['99% Precisão', '360° Visão'],
+      tone: 'lime',
+    },
+  ],
+  projects: [
+    {
+      badge: 'Backend',
+      title: 'Backend analítico com FastAPI',
+      description: 'APIs seguras e performáticas para dados e regras de negócio.',
+      technologies: ['Python', 'FastAPI', 'PostgreSQL'],
+      mockup: 'api',
+      tone: 'blue',
+    },
+    {
+      badge: 'SaaS',
+      title: 'Módulos analíticos para aplicações SaaS',
+      description: 'Componentes reutilizáveis e escaláveis para produtos.',
+      technologies: ['React', 'Python', 'Docker'],
+      mockup: 'chart',
+      tone: 'cyan',
+    },
+    {
+      badge: 'Dashboards',
+      title: 'Dashboards corporativos',
+      description: 'Interfaces analíticas modernas com foco em decisão.',
+      technologies: ['React', 'BI', 'SQL'],
+      mockup: 'dashboard',
+      tone: 'lime',
+    },
+    {
+      badge: 'Data',
+      title: 'Pipelines e integrações',
+      description: 'Fluxos de dados confiáveis e automatizados.',
+      technologies: ['Python', 'ETL', 'SQL'],
+      mockup: 'pipeline',
+      tone: 'lime',
+    },
+  ],
+  differentiators: [
+    {
+      title: 'Não apenas dashboard',
+      description: 'Estrutura que sustenta a análise.',
+      icon: 'PanelTop',
+    },
+    {
+      title: 'Não apenas backend',
+      description: 'Serviços orientados ao uso real do dado.',
+      icon: 'Hexagon',
+    },
+    {
+      title: 'Não apenas visualização',
+      description: 'Interfaces conectadas à operação.',
+      icon: 'Eye',
+    },
+  ],
+};
