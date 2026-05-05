@@ -393,6 +393,7 @@ dd,
 
 .project-scroll {
   scroll-snap-type: x proximity;
+  overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
   overscroll-behavior-x: contain;

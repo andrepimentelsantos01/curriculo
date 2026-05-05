@@ -5,15 +5,6 @@ import { ArrowRight } from 'lucide-react';
 export default function ProjectCard({ item, index }) {
   const [flipped, setFlipped] = useState(false);
 
-  const handleWheel = (event) => {
-    if (flipped || event.shiftKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
-      return;
-    }
-
-    event.preventDefault();
-    window.scrollBy({ top: event.deltaY, behavior: 'auto' });
-  };
-
   return (
     <motion.article
       className="project-flip h-full shrink-0"
@@ -27,9 +18,8 @@ export default function ProjectCard({ item, index }) {
         type="button"
         aria-pressed={flipped}
         aria-label={`${item.title}: ${flipped ? 'mostrar resumo' : 'mostrar detalhes'}`}
-        className={`project-flip-button kinetic-card relative min-h-[270px] w-[300px] overflow-hidden rounded-2xl border border-sky-300/18 bg-slate-900/60 p-5 text-left backdrop-blur-xl transition hover:border-cyan/45 sm:w-[315px] xl:w-[330px] ${flipped ? 'is-flipped' : ''}`}
+        className={`project-flip-button kinetic-card relative min-h-[270px] w-[300px] overflow-hidden rounded-2xl border border-sky-300/18 bg-slate-900/60 text-left transition hover:border-cyan/45 sm:w-[315px] xl:w-[330px] ${flipped ? 'is-flipped' : ''}`}
         onClick={() => setFlipped((current) => !current)}
-        onWheel={handleWheel}
       >
         <span className="project-flip-inner">
           <span className="project-face project-face-front p-5">
